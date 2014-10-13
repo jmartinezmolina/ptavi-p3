@@ -5,6 +5,7 @@
 
 from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
+import os
 import sys
 import smallsmilhandler
 
@@ -19,15 +20,22 @@ parser.setContentHandler(chandler)
 parser.parse(open(sys.argv[1]))
 lista_dic = chandler.get_tags()
 
-for dic in lista_dic:
-    print dic["name"], "\t",
-    for etiqueta in dic:
-        if dic["name"] != dic[etiqueta] and dic[etiqueta] != "": 
-            print etiqueta, "=", dic[etiqueta], "\t",
-    print
-         
-            
 
+for dic in lista_dic:
+    for etiqueta in dic:
+        if etiqueta == "src":
+            recurso = dic[etiqueta]
+            os.system("wget -q " + recurso)
+            elem_div = recurso.split('/')
+            dic[etiqueta] = elem_div[-1]
+
+for dic in lista_dic:
+    print dic["name"] + "\t",
+    for etiqueta in dic:
+        if dic["name"] != dic[etiqueta] and dic[etiqueta] != "":
+            print etiqueta + "=" + '"' + dic[etiqueta] + '"' + "\t",
+    print 
+            
 
 
 
