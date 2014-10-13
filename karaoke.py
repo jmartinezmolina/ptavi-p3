@@ -13,7 +13,6 @@ import smallsmilhandler
 class KaraokeLocal(smallsmilhandler.SmallSMILHandler):
 
     def __init__(self, fichero):
-
         parser = make_parser()
         chandler = smallsmilhandler.SmallSMILHandler()
         parser.setContentHandler(chandler)
@@ -28,11 +27,9 @@ class KaraokeLocal(smallsmilhandler.SmallSMILHandler):
                 if dic["name"] != dic[etiqueta] and dic[etiqueta] != "":
                     salida += etiqueta + "=" + '"' + dic[etiqueta] + '"' + "\t"
             salida += "\n"
-        salida += "\n"
         return salida
 
     def do_local(self):
-
         for dic in self.lista_dic:
             for etiqueta in dic:
                 if etiqueta == "src":
@@ -40,7 +37,6 @@ class KaraokeLocal(smallsmilhandler.SmallSMILHandler):
                     os.system("wget -q " + recurso)
                     elem_div = recurso.split('/')
                     dic[etiqueta] = elem_div[-1]
-
 
 if __name__ == '__main__':
 
